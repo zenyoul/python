@@ -52,5 +52,3 @@ class log(object):
             self.login = 1
         else:
             print "Invalid username or password."
-        
-a=log()
