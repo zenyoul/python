@@ -47,7 +47,7 @@ class log(object):
         passid = len(password)
         userid = len(username)
         
-        if((line[:userid] == username) and (line[passid-1:] == password)):
+        if((line[:userid] == username) and (line[passid-1:] == hashlib.sha224(password).hexdigest())): #De-hashes password upon login.
             print "Login successful."
             self.login = 1
         else:
