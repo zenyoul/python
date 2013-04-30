@@ -19,7 +19,7 @@ class log(object):
         num = len(username)
         for line in lines:
             if line[:num].upper() == username.upper():
-                return line[:-2]
+                return line
             else:
                 pass
         fob.close()
@@ -43,12 +43,18 @@ class log(object):
         fob.close()
 
     def login(self, username, password):
-        line = self.findUser(username)
-        passid = len(password)
-        userid = len(username)
+        hashpswd = hashlib.sha224(password).hexdigest()
+        lineg = username + "   " + hashpswd + "\n"
         
-        if((line[:userid] == username) and (line[passid-1:] == hashlib.sha224(password).hexdigest())): #De-hashes password upon login.
-            print "Login successful."
-            self.login = 1
+        if self.findUser(username) != "None":
+            fob = open("C:/DATABASE/file.txt", "r")
+            line = self.findUser(username)
+            if line == lineg:
+                print "Login succesful."
+                self.login=1
+            else:
+                print "Invalid username or password."
+            fob.close()
         else:
-            print "Invalid username or password."
+            print "User not found."
+        fob.close()
